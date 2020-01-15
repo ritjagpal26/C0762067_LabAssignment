@@ -81,7 +81,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
        
     }
-   
+   // function of location manager to provide current location of user
     func locationManager(_ manager: CLLocationManager, didUpdateLocations location: [CLLocation]) {
  
     let userLocation: CLLocation = location[0]

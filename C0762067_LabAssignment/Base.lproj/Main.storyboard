@@ -22,7 +22,7 @@
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SQf-Tt-gd1">
                                 <rect key="frame" x="0.0" y="33" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <navigationItem title="Find my Way" id="SeP-jG-8le" colorLabel="IBBuiltInLabel-Yellow"/>
@@ -36,24 +36,24 @@
                                     <action selector="locationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gqy-Jc-5XB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lL-Qq-LMw">
-                                <rect key="frame" x="166" y="832" width="69" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lL-Qq-LMw">
+                                <rect key="frame" x="189" y="835" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="walk"/>
+                                <state key="normal" image="walk"/>
                                 <connections>
                                     <action selector="walkButtton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tHm-Un-FLX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jo0-Cl-Bxn">
-                                <rect key="frame" x="243" y="832" width="69" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jo0-Cl-Bxn">
+                                <rect key="frame" x="267" y="835" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Car"/>
+                                <state key="normal" image="car"/>
                                 <connections>
                                     <action selector="carButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vNZ-n3-GsJ"/>
                                 </connections>
                             </button>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="box-zS-5fx">
-                                <rect key="frame" x="29" y="830" width="94" height="32"/>
+                                <rect key="frame" x="313" y="93" width="94" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="stepperZoom:" destination="BYZ-38-t0r" eventType="valueChanged" id="oGK-sV-uNE"/>
@@ -64,9 +64,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="carButton" destination="Jo0-Cl-Bxn" id="5Kj-e4-ePj"/>
                         <outlet property="mapView" destination="0hL-w0-uo9" id="z6c-bJ-MGC"/>
-                        <outlet property="walkButton" destination="1lL-Qq-LMw" id="PuU-1G-cEw"/>
+                        <outlet property="stepperoutlet" destination="box-zS-5fx" id="rqd-rS-I9B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -75,6 +74,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="car" width="24" height="24"/>
         <image name="locationButton" width="67" height="67"/>
+        <image name="walk" width="24" height="24"/>
     </resources>
 </document>

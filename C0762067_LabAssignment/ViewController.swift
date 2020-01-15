@@ -15,20 +15,65 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
     var userlat : Double!
+    var destination : CLLocationCoordinate2D!
     var userlong : Double!
     var lat : Double!
     var long : Double!
+    var type: String = "car"
     
+  
     //Stepper For Zoom In An Zoom OUt
-    @IBAction func stepperZoom(_ sender: Any) {
+      @IBOutlet weak var stepperoutlet: UIStepper!
+    @IBAction func stepperZoom(_ sender: UIStepper) {
+        
+        if sender.value < 0
+               {
+                   let span = MKCoordinateSpan(latitudeDelta: mapView.region.span.latitudeDelta*2, longitudeDelta: mapView.region.span.longitudeDelta*2)
+                      let region = MKCoordinateRegion(center: mapView.region.center, span: span)
+                       
+                      mapView.setRegion(region, animated: true)
+               }
+               else
+               {
+                     let span = MKCoordinateSpan(latitudeDelta: mapView.region.span.latitudeDelta/2, longitudeDelta: mapView.region.span.longitudeDelta/2)
+                     let region = MKCoordinateRegion(center: mapView.region.center, span: span)
+                      
+                     mapView.setRegion(region, animated: true)
+               }
+        
+        
+        
     }
     
     //Button to find way for car
     @IBAction func carButton(_ sender: Any) {
+       if mapView.overlays.count != 0
+       {
+           mapView.removeOverlays(mapView.overlays)
+       }
+       
+       let userloaction = mapView.userLocation
+            let userlocationcoordinates = CLLocationCoordinate2D(latitude: userloaction.coordinate.latitude, longitude: userloaction.coordinate.longitude)
+            let destinationlocation = mapView.annotations
+            let destinationlocationcoordinates = CLLocationCoordinate2D(latitude: destinationlocation[0].coordinate.latitude, longitude: destinationlocation[0].coordinate.longitude)
+        routeGuidance(user: userlocationcoordinates, destination1: destinationlocationcoordinates, transportType: .automobile)
+        
     }
      //Button to find way for walk
     @IBAction func walkButtton(_ sender: Any) {
+       if mapView.overlays.count != 0
+       {
+           mapView.removeOverlays(mapView.overlays)
+       }
+       
+        let userloaction = mapView.userLocation
+            let userlocationcoordinates = CLLocationCoordinate2D(latitude: userloaction.coordinate.latitude, longitude: userloaction.coordinate.longitude)
+            let destinationlocation = mapView.annotations
+            let destinationlocationcoordinates = CLLocationCoordinate2D(latitude: destinationlocation[0].coordinate.latitude, longitude: destinationlocation[0].coordinate.longitude)
+        routeGuidance(user: userlocationcoordinates, destination1: destinationlocationcoordinates, transportType: .walking)
+        
     }
+    
     
     
     override func viewDidLoad() {
@@ -43,6 +88,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // getting location on long =Press
         let onpress = UITapGestureRecognizer(target: self, action: #selector(longPress))
         mapView.addGestureRecognizer(onpress)
+        
+        stepperoutlet.value = 0
+        stepperoutlet.minimumValue = -5
+        stepperoutlet.maximumValue = 5
+        
   
     }
     
@@ -65,7 +115,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             mapView.removeOverlays(mapView.overlays)
         }
         
-//        let   cllocation2d = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+          destination = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
 //
 //
 //
@@ -108,6 +158,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                    
 
 }
+
+    // location button 
    
     @IBAction func locationButton(_ sender: Any) {
         
@@ -115,7 +167,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let userlocationcoordinates = CLLocationCoordinate2D(latitude: userloaction.coordinate.latitude, longitude: userloaction.coordinate.longitude)
         let destinationlocation = mapView.annotations
         let destinationlocationcoordinates = CLLocationCoordinate2D(latitude: destinationlocation[0].coordinate.latitude, longitude: destinationlocation[0].coordinate.longitude)
-        routeGuidance(user: userlocationcoordinates, destination: destinationlocationcoordinates)
+        routeGuidance(user: userlocationcoordinates, destination1: destinationlocationcoordinates, transportType: .transit)
 
         }
     func addPolyLine() {
@@ -123,13 +175,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let polyline = MKPolyline(coordinates: &locations, count: locations.count)
         mapView.addOverlay(polyline)
     }
-    func routeGuidance(user: CLLocationCoordinate2D, destination: CLLocationCoordinate2D)
+    func routeGuidance(user: CLLocationCoordinate2D, destination1: CLLocationCoordinate2D,transportType : MKDirectionsTransportType)
     {
         let direction = MKDirections.Request()
         direction.source = MKMapItem(placemark: MKPlacemark(coordinate: user, addressDictionary: nil))
         direction.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination, addressDictionary: nil))
         direction.requestsAlternateRoutes = true
-        direction.transportType = .automobile
+        direction.transportType = transportType
 
         let directions = MKDirections(request: direction)
 
@@ -144,7 +196,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 }
-
+// extension of mapview
 extension ViewController: MKMapViewDelegate {
 func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
     let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)

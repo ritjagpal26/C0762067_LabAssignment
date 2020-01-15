@@ -59,7 +59,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         annotation.title = "Selected Loaction"
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
-        
+        // To remove the perivious Overlay
         if mapView.overlays.count != 0
         {
             mapView.removeOverlays(mapView.overlays)
